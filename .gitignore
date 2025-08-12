@@ -19,3 +19,5 @@ generic/blinky.png
 generic/blinky.posp
 generic/blinky.vm
 .vscode
+Apycula.egg-info/
+apycula/_version.py

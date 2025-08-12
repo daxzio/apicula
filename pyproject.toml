@@ -1,41 +1,40 @@
 [build-system]
-requires = ["hatchling",
-"hatch-vcs"]
-build-backend = "hatchling.build"
+requires = ["setuptools>=61", "setuptools_scm"]
+build-backend = "setuptools.build_meta"
 
 [project]
 name = "Apycula"
-dynamic = ["version"]
 description = "Open Source tools for Gowin FPGAs"
-license = ""
+readme = "readme.md"
 requires-python = ">=3.8"
+license = { text = "MIT" }
 authors = [
-    { name = "Pepijn de Vos", email = "pepijndevos@gmail.com" },
+    { name = "Pepijn de Vos", email = "pepijndevos@gmail.com" }
 ]
-classifiers = [
-    "License :: OSI Approved :: MIT License",
-    "Operating System :: OS Independent",
-    "Programming Language :: Python :: 3",
-]
+urls = { "Homepage" = "https://github.com/YosysHQ/apicula" }
 dependencies = [
-    "crc",
+    "crc"
+]
+dynamic = ["version"]
+
+# PEP 621 classifiers from setup.py
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent"
 ]
 
 [project.scripts]
 gowin_pack = "apycula.gowin_pack:main"
-gowin_pll = "apycula.gowin_pll:main"
 gowin_unpack = "apycula.gowin_unpack:main"
+gowin_pll = "apycula.gowin_pll:main"
 
-[project.urls]
-Homepage = "https://github.com/YosysHQ/apicula"
+[tool.setuptools]
+packages = ["apycula"]
 
-[tool.hatch.version]
-source = "vcs"
+[tool.setuptools.package-data]
+apycula = ["*.pickle"]
 
-[tool.hatch.build.hooks.vcs]
-version-file = "apycula/_version.py"
-
-[tool.hatch.build.targets.sdist]
-include = [
-    "/apycula",
-]
+[tool.setuptools_scm]
+version_scheme = "guess-next-dev"
+local_scheme = "node-and-date"
