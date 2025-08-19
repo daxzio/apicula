@@ -233,11 +233,11 @@ jobs:
     - name: Install and build
       run: |
         python -m pip install --upgrade pip
-        pip install setuptools==61.0 wheel twine
+        pip install --upgrade setuptools wheel twine
         python setup.py --version
         python setup.py sdist bdist_wheel
         # Validate that the resulting wheel can be executed
-        pip install dist/Apycula-$(python setup.py --version)-py3-none-any.whl
+        pip install dist/apycula-$(python setup.py --version)-py3-none-any.whl
         gowin_pack --help
     - name: Archive artifact
       uses: actions/upload-artifact@v4
@@ -296,7 +296,7 @@ jobs:
         git clone https://github.com/YosysHQ/nextpnr.git
         sudo apt-get update
         sudo apt-get install build-essential clang bison flex \
-          libreadline-dev gawk tcl-dev libffi-dev git \
+          libreadline-dev gawk tcl-dev libffi-dev git libfl-dev \
           graphviz xdot pkg-config python3 libboost-system-dev \
           libboost-python-dev libboost-filesystem-dev zlib1g-dev \
           libboost-thread-dev libboost-program-options-dev libboost-iostreams-dev libboost-dev \
@@ -310,8 +310,6 @@ jobs:
         cd ../nextpnr
         git checkout ${{ matrix.nextpnr }}
         git submodule update --init --recursive
-        # XXX enable GW5A family in the nextpnr
-        sed -i 's/GW2A-18C/GW2A-18C GW5A-25A/' himbaechel/uarch/gowin/CMakeLists.txt
         mkdir -p build
         cd build
         cmake .. -DBUILD_PYTHON=OFF -DARCH="himbaechel" -DHIMBAECHEL_UARCH=gowin -DHIMBAECHEL_GOWIN_DEVICES="all" -DPython3_EXECUTABLE=${{ steps.pysetup.outputs.python-path }}
